@@ -35,9 +35,23 @@ public class ConstantController {
 	public @ResponseBody Map<String, Object> ekle(@RequestBody Map<String, String> map) {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Constants constants = new Constants();
-	
-		constants.setCategories(map.get("categories");
+		String gelenDeger = map.get("categories");
 		
+		IncomeExpense kategoriEnumum =null;
+
+		if (gelenDeger.equals("GELIR")){
+		kategoriEnumum = IncomeExpense.INCOME;
+		}
+		else if(gelenDeger.equals("GİDER")){
+			kategoriEnumum = IncomeExpense.EXPENSE;
+			}
+		else if(gelenDeger.equals("DEVİR")){
+			kategoriEnumum = IncomeExpense.ASSIGN;
+			}
+		else if(gelenDeger.equals("DEVİR KAPAMA"))
+			{kategoriEnumum = IncomeExpense.ASSIGN;}
+		
+		constants.setCategories(kategoriEnumum);
 		constants.setClassific(map.get("classific"));
 		String arefcode = map.get("referencecode");
 		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refCode", arefcode));

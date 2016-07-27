@@ -1,9 +1,9 @@
 package edu.iu.perfin.type;
 
 public enum IncomeExpense {
-	INCOME("GELİR"), EXPENSE("GİDER"), ASSIGN("DEVİR"), OUTSTAND("DEVİR KAPAMA");
+	INCOME, EXPENSE, ASSIGN, OUTSTAND;
 
-	private String gtype;
+	/*private String gtype;
 
 	private IncomeExpense(String gtype) {
 		this.gtype = gtype;
@@ -11,5 +11,5 @@ public enum IncomeExpense {
 
 	public String getGtype() {
 		return this.gtype;
-	}
+	}*/
 }

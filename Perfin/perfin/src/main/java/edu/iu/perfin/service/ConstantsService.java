@@ -11,27 +11,7 @@ import edu.iu.perfin.type.IncomeExpense;
 @Service
 public class ConstantsService {
 
-	// private static final IncomeExpense IncomeExpense = null;
-
-	public String choose(IncomeExpense chs) {
-		String ch = "";
-
-		if (chs == edu.iu.perfin.type.IncomeExpense.INCOME) {
-			ch = edu.iu.perfin.type.IncomeExpense.INCOME.getGtype();
-		} else if (chs == edu.iu.perfin.type.IncomeExpense.EXPENSE) {
-			ch = edu.iu.perfin.type.IncomeExpense.EXPENSE.getGtype();
-		} else if (chs == edu.iu.perfin.type.IncomeExpense.ASSIGN) {
-			ch = edu.iu.perfin.type.IncomeExpense.ASSIGN.getGtype();
-		} else {
-			ch = edu.iu.perfin.type.IncomeExpense.OUTSTAND.getGtype();
-		}
-		return ch;
-	}
-
 	public void add(Constants constants) {
-		String ch =choose(get("categories",))	// BU KISIMLARI YAPAMADIM
-		
-		constants.setCategories("ch");
 		Ebean.save(constants);
 	}
 
