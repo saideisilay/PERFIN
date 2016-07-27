@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.avaje.ebean.Expr;
+
 import edu.iu.perfin.model.Account;
 import edu.iu.perfin.model.BankCards;
 import edu.iu.perfin.model.User;
 import edu.iu.perfin.service.BankCardService;
+import edu.iu.perfin.service.GeneralService;
+import edu.iu.perfin.type.CardType;
 
 @Controller
 @RequestMapping(value = "bankcard")
@@ -56,10 +60,23 @@ public class BankCardController {
 
 		BankCards card = new BankCards();
 		card.setCardName(map2.get("cardName"));
-		// card.setCardType((map2.get("cardType")); enum old için
+		
+		String incomingCard = map2.get("cardType");
+		CardType type =null;
+		if (incomingCard.equals("Debit Card")) {
+			type= CardType.DebitCard;}
+		else if(incomingCard.equals("Credit Card")){
+			type=CardType.CreditCard;
+		}
+		card.setCardType (type);
 		card.setDescription(map2.get("description"));
-		// card.setLimit(map2.get("limit")); double old için
-		// card.setDept(map2.get("dept"); double old için
+		String lim = map2.get("limit");
+		Double limm = Double.parseDouble(lim);
+		card.setLimit(limm);
+		
+		String dep = map2.get("dept");
+		Double depp = Double.parseDouble(dep);
+		card.setDept(depp);
 		bankservice.add(card);
 
 		return card;
