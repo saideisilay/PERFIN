@@ -27,12 +27,12 @@ public class Constants {
 		super();
 	}
 
-	public Constants( Long constiD, String classific, Account account, IncomeExpense categories) {
+	public Constants( Long constiD, String classification, Account caseid, IncomeExpense categories) {
 
 		super();
 		this.constID = constiD;
-		this.classific = classific;
-		this.account = account;
+		this.classification = classification;
+		this.caseid = caseid;
 		this.categories = categories;
 	
 	}
@@ -50,26 +50,26 @@ public class Constants {
 	private IncomeExpense categories;
 
 	@Column(name = "CLASSIFICATION")
-	private String classific;
+	private String classification;
 
 	public String getClassific() {
-		return classific;
+		return classification;
 	}
 
-	public void setClassific(String classific) {
-		this.classific = classific;
+	public void setClassific(String classification) {
+		this.classification = classification;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "ACCOUNT")
-	private Account account;
+	@JoinColumn(name = "CASEID")
+	private Account caseid;
 
 	public Account getAccount() {
-		return account;
+		return caseid;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setAccount(Account caseid) {
+		this.caseid = caseid;
 	}
 
 	public IncomeExpense getCategories() {
