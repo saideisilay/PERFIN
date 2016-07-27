@@ -1,5 +1,5 @@
-alter table t_perfin_constants drop constraint if exists fk_t_prfn_cnstnts_rfrnccd;
-drop index if exists ix_t_prfn_cnstnts_rfrnccd;
+alter table t_perfin_constants drop constraint if exists fk_t_perfin_constants_caseid;
+drop index if exists ix_t_perfin_constants_caseid;
 
 alter table t_perfin_user drop constraint if exists fk_t_perfin_user_account;
 drop index if exists ix_t_perfin_user_account;

@@ -13,7 +13,7 @@ create table t_perfin_bankcard (
   cardname                      varchar2(255),
   cardtype                      varchar2(10),
   description                   varchar2(255),
-  creditavailable               number(19,4),
+  limit                         number(19,4),
   dept                          number(19,4),
   constraint ck_t_perfin_bankcard_cardtype check (CARDTYPE in ('DebitCard','CreditCard')),
   constraint pk_t_perfin_bankcard primary key (bankid)
@@ -27,6 +27,7 @@ create table t_perfin_constincomeexpense (
   periodconstant                varchar2(11),
   type                          varchar2(12),
   incomeexpense                 varchar2(8),
+  user_id                       number(19),
   constraint ck_t_prfn_cnstncmxpns_prdcn_1 check (PERIODCONSTANT in ('everyDay','everyWeek','everyMounth')),
   constraint ck_t_prfn_cnstncmxpns_typ check (TYPE in ('Cash','CreditCard','DebitCard','OverdraftAcc')),
   constraint ck_t_prfn_cnstncmxpns_ncmxpns check (INCOMEEXPENSE in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
@@ -38,7 +39,7 @@ create table t_perfin_constants (
   constid                       number(19) not null,
   categories                    varchar2(8),
   classification                varchar2(255),
-  referencecode                 number(19),
+  caseid                        number(19),
   constraint ck_t_prfn_cnstnts_ctgrs check (CATEGORIES in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
   constraint pk_t_perfin_constants primary key (constid)
 );
@@ -69,8 +70,8 @@ create table t_perfin_user (
 );
 create sequence S_PERFIN_USER increment by 1;
 
-alter table t_perfin_constants add constraint fk_t_prfn_cnstnts_rfrnccd foreign key (referencecode) references t_perfin_account (accountid);
-create index ix_t_prfn_cnstnts_rfrnccd on t_perfin_constants (referencecode);
+alter table t_perfin_constants add constraint fk_t_perfin_constants_caseid foreign key (caseid) references t_perfin_account (accountid);
+create index ix_t_perfin_constants_caseid on t_perfin_constants (caseid);
 
 alter table t_perfin_user add constraint fk_t_perfin_user_account foreign key (account) references t_perfin_account (accountid);
 create index ix_t_perfin_user_account on t_perfin_user (account);
