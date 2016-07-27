@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 //import javax.persistence.JoinColumn;
 //import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -47,13 +49,16 @@ public class ConstIncomeExpense {
 	@Enumerated(EnumType.STRING)
 	private IncomeExpense incomeExpense;
 	
+	@ManyToOne
+	@JoinColumn(name = "USERID")
+	private Long userId;
 	
 	ConstIncomeExpense()
 	{
 		super();
 	}
 	
-	ConstIncomeExpense(PeriodConst periodConst,PayloadType payloadType, IncomeExpense incomeExpense,Long constInExId, Double amount, String date)
+	ConstIncomeExpense(Long userId, PeriodConst periodConst,PayloadType payloadType, IncomeExpense incomeExpense,Long constInExId, Double amount, String date)
 	{
 		super();
 		this.periodConst = periodConst;
@@ -63,8 +68,8 @@ public class ConstIncomeExpense {
 		this.amount = amount;
 		this.date = date;
 		
-		
 	}
+	
 	public PeriodConst getPeriodConst() {
 		return periodConst;
 	}
