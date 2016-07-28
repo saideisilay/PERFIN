@@ -1,5 +1,6 @@
 package edu.iu.perfin.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,13 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.avaje.ebean.Expr;
 
-import edu.iu.perfin.model.Account;
 import edu.iu.perfin.model.BankCards;
-import edu.iu.perfin.model.User;
 import edu.iu.perfin.service.BankCardService;
-import edu.iu.perfin.service.GeneralService;
 import edu.iu.perfin.type.CardType;
 
 @Controller
@@ -60,23 +57,25 @@ public class BankCardController {
 
 		BankCards card = new BankCards();
 		card.setCardName(map2.get("cardName"));
-		
+
 		String incomingCard = map2.get("cardType");
-		CardType type =null;
+		CardType type = null;
 		if (incomingCard.equals("Debit Card")) {
-			type= CardType.DebitCard;}
-		else if(incomingCard.equals("Credit Card")){
-			type=CardType.CreditCard;
+			type = CardType.DebitCard;
+		} else if (incomingCard.equals("Credit Card")) {
+			type = CardType.CreditCard;
 		}
-		card.setCardType (type);
+		card.setCardType(type);
 		card.setDescription(map2.get("description"));
+
 		String lim = map2.get("limit");
-		Double limm = Double.parseDouble(lim);
+		BigDecimal limm = new BigDecimal(lim);
 		card.setLimit(limm);
-		
+
 		String dep = map2.get("dept");
-		Double depp = Double.parseDouble(dep);
+		BigDecimal depp = new BigDecimal(dep);
 		card.setDept(depp);
+
 		bankservice.add(card);
 
 		return card;

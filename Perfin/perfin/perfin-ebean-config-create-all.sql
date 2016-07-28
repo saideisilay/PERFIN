@@ -13,8 +13,8 @@ create table t_perfin_bankcard (
   cardname                      varchar2(255),
   cardtype                      varchar2(10),
   description                   varchar2(255),
-  limit                         number(19,4),
-  dept                          number(19,4),
+  limit                         number(38),
+  dept                          number(38),
   constraint ck_t_perfin_bankcard_cardtype check (CARDTYPE in ('DebitCard','CreditCard')),
   constraint pk_t_perfin_bankcard primary key (bankid)
 );

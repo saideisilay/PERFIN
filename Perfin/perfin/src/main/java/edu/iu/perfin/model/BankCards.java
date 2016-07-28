@@ -1,5 +1,7 @@
 package edu.iu.perfin.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,16 +36,16 @@ public class BankCards {
 	private String description;
 
 	@Column(name = "LIMIT")
-	private Double limit;
+	private BigDecimal limit;
 
 	@Column(name = "DEPT")
-	private Double dept;
+	private BigDecimal dept;
 
 	public BankCards() {
 		super();
 	}
 
-	public BankCards(Long bankId, String cardName, String description, Double limit, Double dept, CardType cardType) {
+	public BankCards(Long bankId, String cardName, String description, BigDecimal limit, BigDecimal dept, CardType cardType) {
 		super();
 		this.bankId = bankId;
 		this.cardName = cardName;
@@ -77,19 +79,19 @@ public class BankCards {
 		this.description = description;
 	}
 
-	public Double getLimit() {
+	public BigDecimal getLimit() {
 		return limit;
 	}
 
-	public void setLimit(Double limit) {
+	public void setLimit(BigDecimal limit) {
 		this.limit = limit;
 	}
 
-	public Double getDept() {
+	public BigDecimal getDept() {
 		return dept;
 	}
 
-	public void setDept(Double dept) {
+	public void setDept(BigDecimal dept) {
 		this.dept = dept;
 	}
 	// public enum CardType ;
