@@ -4,33 +4,33 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
-import edu.iu.perfin.model.BankCards;
+import edu.iu.perfin.model.BankCard;
 
 @Service
 public class BankCardService {
 
-	public void add(BankCards card) {
+	public void add(BankCard card) {
 		
-				BankCards card1 = get("cardName", card.getCardName());
+				BankCard card1 = get("cardNumber", card.getCardNumber());
 				if (card1 != null)
-					throw new RuntimeException("CHANGE CARD NAME");
+					throw new RuntimeException("YOU HAVE ALREADY RECORD CARD NUMBER");
 				
 				Ebean.save(card);
 			}
 
-			public void delete(BankCards bankCards) {
-				Ebean.delete(bankCards);
+			public void delete(BankCard BankCard) {
+				Ebean.delete(BankCard);
 			}
 
-			public void update(BankCards bankCards) {
-				Ebean.update(bankCards);
+			public void update(BankCard BankCard) {
+				Ebean.update(BankCard);
 			}
 
-			public BankCards get(String columnName, Object value) {
-				return GeneralService.getFirstByColumn(BankCards.class, Expr.eq(columnName, value));
+			public BankCard get(String columnName, Object value) {
+				return GeneralService.getFirstByColumn(BankCard.class, Expr.eq(columnName, value));
 			}
 
-			public List<BankCards> getAll() {
-				return GeneralService.loadAll(BankCards.class);
+			public List<BankCard> getAll() {
+				return GeneralService.loadAll(BankCard.class);
 			}
 		}

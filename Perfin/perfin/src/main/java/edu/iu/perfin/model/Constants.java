@@ -27,22 +27,13 @@ public class Constants {
 		super();
 	}
 
-	public Constants( Long constiD, String classification, Account caseid, IncomeExpense categories) {
+	public Constants(Long constID, String classification, Account caseid, IncomeExpense categories) {
 
 		super();
-		this.constID = constiD;
+		this.constID = constID;
+		this.categories = categories;
 		this.classification = classification;
 		this.caseid = caseid;
-		this.categories = categories;
-	
-	}
-
-	public Long getConstID() {
-		return constID;
-	}
-
-	public void setConstID(Long constiD) {
-		this.constID = constiD;
 	}
 
 	@Column(name = "CATEGORIES")
@@ -52,24 +43,16 @@ public class Constants {
 	@Column(name = "CLASSIFICATION")
 	private String classification;
 
-	public String getClassific() {
-		return classification;
-	}
-
-	public void setClassific(String classification) {
-		this.classification = classification;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "CASEID")
 	private Account caseid;
 
-	public Account getAccount() {
-		return caseid;
+	public Long getConstID() {
+		return constID;
 	}
 
-	public void setAccount(Account caseid) {
-		this.caseid = caseid;
+	public void setConstID(Long constID) {
+		this.constID = constID;
 	}
 
 	public IncomeExpense getCategories() {
@@ -79,5 +62,22 @@ public class Constants {
 	public void setCategories(IncomeExpense categories) {
 		this.categories = categories;
 	}
+
+	public String getClassification() {
+		return classification;
+	}
+
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+
+	public Account getCaseid() {
+		return caseid;
+	}
+
+	public void setCaseid(Account caseid) {
+		this.caseid = caseid;
+	}
+
 
 }

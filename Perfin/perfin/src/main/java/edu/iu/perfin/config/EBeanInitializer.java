@@ -11,8 +11,7 @@ import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.ServerConfig;
 
 import edu.iu.perfin.model.Account;
-import edu.iu.perfin.model.BankCards;
-import edu.iu.perfin.model.ConstIncomeExpense;
+import edu.iu.perfin.model.BankCard;
 import edu.iu.perfin.model.Constants;
 import edu.iu.perfin.model.RecordIncomeExpense;
 import edu.iu.perfin.model.User;
@@ -59,8 +58,7 @@ public class EBeanInitializer implements InitializingBean {
 		config.addClass(User.class);
 		config.addClass(Account.class);
 		config.addClass(Constants.class);
-		config.addClass(BankCards.class);
-		config.addClass(ConstIncomeExpense.class);
+		config.addClass(BankCard.class);
 		config.addClass(RecordIncomeExpense.class);
 		EbeanServerFactory.create(config);
 	}

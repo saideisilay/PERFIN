@@ -28,7 +28,7 @@ public class ConstantController {
 	@Autowired
 	ConstantsService consservice;
 
-	@RequestMapping(value = "/ekle", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> ekle(@RequestBody Map<String, String> map) {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Constants constants = new Constants();
@@ -46,10 +46,10 @@ public class ConstantController {
 			kategoriEnumum = IncomeExpense.ASSIGN;
 		}
 		constants.setCategories(kategoriEnumum);
-		constants.setClassific(map.get("classification"));
+		constants.setClassification(map.get("classification"));
 		String arefcode = map.get("caseid");
-		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refCode", arefcode));
-		constants.setAccount(account);
+		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));
+		constants.setCaseid(account);
 
 		consservice.add(constants);
 		returnmap.put("constants", constants);
@@ -61,9 +61,7 @@ public class ConstantController {
 		Map<String, String> constMap = new HashMap<String, String>();
 		constMap.put("categories", map.get("categories"));
 		constMap.put("classification", map.get("classification"));
-		String arefcode = map.get("caseid");
-		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refCode", arefcode));
-		constMap.put("account", map.get("refcode"));
+		constMap.put("caseid", map.get("caseid"));
 		return constMap;
 	}
 

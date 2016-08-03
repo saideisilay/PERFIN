@@ -46,9 +46,9 @@ public class User {
 	public User(String name, Long userId, String surname, String username, String email, String password,
 			Account account) {
 		super();
+		this.userId = userId;
 		this.name = name;
 		this.surname = surname;
-		this.userId = userId;
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -71,20 +71,20 @@ public class User {
 		this.name = name;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getSurname() {
 		return surname;
 	}
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {

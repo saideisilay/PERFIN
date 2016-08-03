@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	UserService service;
 
-	@RequestMapping(value = "/goruntule", method = RequestMethod.POST)
+	@RequestMapping(value = "/display", method = RequestMethod.POST)
 	// postman'de url adresi ve POST yapılması
 	public @ResponseBody Map<String, String> liste(@RequestBody Map<String, String> map) {
 		Map<String, String> userMap = new HashMap<String, String>();
@@ -38,9 +38,9 @@ public class UserController {
 		userMap.put("email", map.get("email"));
 		userMap.put("password", map.get("password"));
 
-		String arefcode = map.get("referencecode");
-		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refCode", arefcode));
-		userMap.put("referencecode", map.get("referencecode"));
+		String arefcode = map.get("refcode");
+		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));
+		userMap.put("refcode", map.get("refcode"));
 		return userMap;
 	}
 
@@ -48,8 +48,10 @@ public class UserController {
 	public @ResponseBody List<User> getAll() {
 		return service.getAll();
 	}
-
-	@RequestMapping(value = "/ekle", method = RequestMethod.POST)
+	
+//update etmek için bi request yaz
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> ekle(@RequestBody Map<String, String> map) {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		User user = new User();
@@ -58,12 +60,13 @@ public class UserController {
 		user.setUsername(map.get("username"));
 		user.setEmail(map.get("email"));
 		user.setPassword(map.get("password"));
-		String arefcode = map.get("referencecode");
-		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refCode", arefcode));
+		
+		String arefcode = map.get("refcode");
+		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));
 		user.setAccount(account);
 		service.add(user);
-		returnmap.put("user", user);
-		return returnmap;
+		//returnmap.put("user", user);	//user ı ekler üstüne set account old için eklemeyle beraber gösterir
+		return returnmap;				//ama gereksiz ondan comment yaptım
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)

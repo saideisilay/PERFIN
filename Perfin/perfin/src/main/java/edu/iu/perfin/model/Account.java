@@ -29,20 +29,20 @@ public class Account {
 	@Column(name = "ADDRESS")
 	private String address;
 
-	@Column(name = "REFERENCECODE")
-	private String refCode;
+	@Column(name = "REFCODE")
+	private String refcode;
 
 	public Account() {
 		super();
 	}
 
-	public Account(Long accountId, String accountName, String accountDesc, String Address, String refCode) {
+	public Account(Long accountId, String accountName, String accountDesc, String Address, String refcode) {
 		super();
 		this.accountId = accountId;
 		this.accountName = accountName;
 		this.accountDesc = accountDesc;
 		this.address = Address;
-		this.refCode = refCode;
+		this.refcode = refcode;
 	}
 
 	public Long getAccountId() {
@@ -77,11 +77,13 @@ public class Account {
 		this.address = address;
 	}
 
-	public String getRefCode() {
-		return refCode;
+	public String getRefcode() {
+		return refcode;
 	}
 
-	public void setRefCode(String refCode) {
-		this.refCode = refCode;
+	public void setRefcode(String refcode) {
+		this.refcode = refcode;
 	}
+
+
 }

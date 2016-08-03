@@ -1,7 +1,6 @@
 package edu.iu.perfin.model;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,13 +16,16 @@ import edu.iu.perfin.type.CardType;
 @Entity
 @Table(name = "T_PERFIN_BANKCARD")
 
-public class BankCards {
+public class BankCard {
 
 	@Id
 	@Column(name = "BANKID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "S_PERFIN_BANK")
 	@SequenceGenerator(name = "S_PERFIN_BANK", sequenceName = "S_PERFIN_BANK", allocationSize = 1, initialValue = 1)
 	private Long bankId;
+
+	@Column(name = "CARDNUMBER")
+	private String cardNumber;
 
 	@Column(name = "CARDNAME")
 	private String cardName;
@@ -41,18 +43,21 @@ public class BankCards {
 	@Column(name = "DEPT")
 	private BigDecimal dept;
 
-	public BankCards() {
+	public BankCard() {
 		super();
 	}
 
-	public BankCards(Long bankId, String cardName, String description, BigDecimal limit, BigDecimal dept, CardType cardType) {
+	public BankCard(Long bankId, String cardName, String description, BigDecimal limit, BigDecimal dept,
+			CardType cardType, String cardNumber) {
 		super();
 		this.bankId = bankId;
 		this.cardName = cardName;
+		this.cardType = cardType;
+		this.cardNumber = cardNumber;
 		this.description = description;
 		this.limit = limit;
 		this.dept = dept;
-		this.cardType = cardType;
+
 	}
 
 	public Long getBankId() {
@@ -61,6 +66,22 @@ public class BankCards {
 
 	public void setBankId(Long bankId) {
 		this.bankId = bankId;
+	}
+
+	public CardType getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(CardType cardType) {
+		this.cardType = cardType;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 	public String getCardName() {
@@ -94,13 +115,5 @@ public class BankCards {
 	public void setDept(BigDecimal dept) {
 		this.dept = dept;
 	}
-	// public enum CardType ;
 
-	public CardType getCardType() {
-		return cardType;
-	}
-
-	public void setCardType(CardType cardType) {
-		this.cardType = cardType;
-	}
 }

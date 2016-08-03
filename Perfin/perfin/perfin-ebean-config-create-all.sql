@@ -3,13 +3,14 @@ create table t_perfin_account (
   accountname                   varchar2(255),
   accountdesc                   varchar2(255),
   address                       varchar2(255),
-  referencecode                 varchar2(255),
+  refcode                       varchar2(255),
   constraint pk_t_perfin_account primary key (accountid)
 );
 create sequence S_PERFIN_ACCOUNT increment by 1;
 
 create table t_perfin_bankcard (
   bankid                        number(19) not null,
+  cardnumber                    varchar2(255),
   cardname                      varchar2(255),
   cardtype                      varchar2(10),
   description                   varchar2(255),
@@ -19,21 +20,6 @@ create table t_perfin_bankcard (
   constraint pk_t_perfin_bankcard primary key (bankid)
 );
 create sequence S_PERFIN_BANK increment by 1;
-
-create table t_perfin_constincomeexpense (
-  constincexid                  number(19) not null,
-  amount                        number(19,4),
-  date                          varchar2(255),
-  periodconstant                varchar2(11),
-  type                          varchar2(12),
-  incomeexpense                 varchar2(8),
-  user_id                       number(19),
-  constraint ck_t_prfn_cnstncmxpns_prdcn_1 check (PERIODCONSTANT in ('everyDay','everyWeek','everyMounth')),
-  constraint ck_t_prfn_cnstncmxpns_typ check (TYPE in ('Cash','CreditCard','DebitCard','OverdraftAcc')),
-  constraint ck_t_prfn_cnstncmxpns_ncmxpns check (INCOMEEXPENSE in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
-  constraint pk_t_prfn_cnstncmxpns primary key (constincexid)
-);
-create sequence S_PERFIN_CONSTINCOMEEXPENSE increment by 1;
 
 create table t_perfin_constants (
   constid                       number(19) not null,
@@ -47,16 +33,20 @@ create sequence S_PERFIN_CONSTANTS increment by 1;
 
 create table t_perfin_record (
   recordid                      number(19) not null,
-  date                          varchar2(255),
+  recdate                       varchar2(255),
   descript                      varchar2(255),
-  recordamount                  number(19,4),
+  amount                        number(38),
   incomeexpense                 varchar2(8),
-  periodconst                   varchar2(11),
+  mainuserid                    number(19),
+  assignuserid                  number(19),
+  paytype                       varchar2(12),
+  categorytype                  number(19),
+  banks                         number(19),
   constraint ck_t_prfn_rcrd_ncmxpns check (INCOMEEXPENSE in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
-  constraint ck_t_prfn_rcrd_prdcnst check (PERIODCONST in ('everyDay','everyWeek','everyMounth')),
+  constraint ck_t_perfin_record_paytype check (PAYTYPE in ('Cash','CreditCard','DebitCard','OverdraftAcc')),
   constraint pk_t_perfin_record primary key (recordid)
 );
-create sequence T_PERFIN_RECORD increment by 1;
+create sequence S_PERFIN_RECORD increment by 1;
 
 create table t_perfin_user (
   userid                        number(19) not null,
@@ -72,6 +62,18 @@ create sequence S_PERFIN_USER increment by 1;
 
 alter table t_perfin_constants add constraint fk_t_perfin_constants_caseid foreign key (caseid) references t_perfin_account (accountid);
 create index ix_t_perfin_constants_caseid on t_perfin_constants (caseid);
+
+alter table t_perfin_record add constraint fk_t_perfin_record_mainuserid foreign key (mainuserid) references t_perfin_user (userid);
+create index ix_t_perfin_record_mainuserid on t_perfin_record (mainuserid);
+
+alter table t_perfin_record add constraint fk_t_prfn_rcrd_ssgnsrd foreign key (assignuserid) references t_perfin_user (userid);
+create index ix_t_prfn_rcrd_ssgnsrd on t_perfin_record (assignuserid);
+
+alter table t_perfin_record add constraint fk_t_prfn_rcrd_ctgrytyp foreign key (categorytype) references t_perfin_constants (constid);
+create index ix_t_prfn_rcrd_ctgrytyp on t_perfin_record (categorytype);
+
+alter table t_perfin_record add constraint fk_t_perfin_record_banks foreign key (banks) references t_perfin_bankcard (bankid);
+create index ix_t_perfin_record_banks on t_perfin_record (banks);
 
 alter table t_perfin_user add constraint fk_t_perfin_user_account foreign key (account) references t_perfin_account (accountid);
 create index ix_t_perfin_user_account on t_perfin_user (account);
