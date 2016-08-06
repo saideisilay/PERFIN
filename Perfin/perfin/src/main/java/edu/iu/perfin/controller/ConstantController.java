@@ -33,18 +33,7 @@ public class ConstantController {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Constants constants = new Constants();
 		
-		String gelenDeger = map.get("categories");
-		IncomeExpense kategoriEnumum = null;
-
-		if (gelenDeger.equals("GELİR")) {
-			kategoriEnumum = IncomeExpense.INCOME;
-		} else if (gelenDeger.equals("GİDER")) {
-			kategoriEnumum = IncomeExpense.EXPENSE;
-		} else if (gelenDeger.equals("DEVİR")) {
-			kategoriEnumum = IncomeExpense.ASSIGN;
-		} else if (gelenDeger.equals("DEVİR KAPAMA")) {
-			kategoriEnumum = IncomeExpense.ASSIGN;
-		}
+		IncomeExpense kategoriEnumum= consservice.toAssignEnum(map.get("categories"));
 		constants.setCategories(kategoriEnumum);
 		constants.setClassification(map.get("classification"));
 		String arefcode = map.get("caseid");

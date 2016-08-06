@@ -10,7 +10,19 @@ import edu.iu.perfin.type.IncomeExpense;
 
 @Service
 public class ConstantsService {
-
+	public IncomeExpense toAssignEnum(String gelenDeger)
+	{
+	IncomeExpense gelirgider = null;
+	if (gelenDeger.equals("GELİR")) {
+		gelirgider = IncomeExpense.INCOME;
+	} else if (gelenDeger.equals("GİDER")) {
+		gelirgider = IncomeExpense.EXPENSE;
+	} else if (gelenDeger.equals("DEVİR")) {
+		gelirgider = IncomeExpense.ASSIGN;
+	} else if (gelenDeger.equals("DEVİR KAPAMA")) {
+		gelirgider = IncomeExpense.ASSIGN;}
+		return gelirgider;
+	}
 	public void add(Constants constants) {
 		Ebean.save(constants);
 	}

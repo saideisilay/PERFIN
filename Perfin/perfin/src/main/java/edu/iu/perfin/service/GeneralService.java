@@ -19,6 +19,7 @@ import com.avaje.ebean.OrderBy.Property;
 import com.avaje.ebean.Query;
 import com.avaje.ebeaninternal.server.expression.SimpleExpression;
 
+import edu.iu.perfin.type.IncomeExpense;
 import edu.iu.perfin.util.CollectionUtils;
 import edu.iu.perfin.util.StringUtil;
 
@@ -31,7 +32,20 @@ public class GeneralService {
 		if(id == null) return null;
 		return (T) Ebean.find(clazz, id);
 	}
-
+	public static IncomeExpense toAssignEnum(String gelenDeger)
+	{
+	IncomeExpense gelirgider = null;
+	if (gelenDeger.equals("GELİR")) {
+		gelirgider = IncomeExpense.INCOME;
+	} else if (gelenDeger.equals("GİDER")) {
+		gelirgider = IncomeExpense.EXPENSE;
+	} else if (gelenDeger.equals("DEVİR")) {
+		gelirgider = IncomeExpense.ASSIGN;
+	} else if (gelenDeger.equals("DEVİR KAPAMA")) {
+		gelirgider = IncomeExpense.ASSIGN;}
+		return gelirgider;
+	}
+	
 	public static <T> T getFirstByColumn(Class<T> clazz, String columns, Expression... exprs) {
 		Query<T> query = generateQuery(clazz, 0, 1, null, Arrays.asList(exprs), columns);
 		List<T> findList = query.findList();

@@ -18,10 +18,12 @@ import edu.iu.perfin.model.BankCard;
 import edu.iu.perfin.model.Constants;
 import edu.iu.perfin.model.RecordIncomeExpense;
 import edu.iu.perfin.model.User;
+import edu.iu.perfin.service.ConstantsService;
 import edu.iu.perfin.service.GeneralService;
 import edu.iu.perfin.service.RecordService;
 import edu.iu.perfin.type.IncomeExpense;
 import edu.iu.perfin.type.PayloadType;
+
 
 @Controller
 @RequestMapping(value = "record")
@@ -30,7 +32,8 @@ public class RecordController {
 
 	@Autowired
 	RecordService recordservice;
-
+	ConstantsService consservice;
+	
 	@RequestMapping(value = "/display", method = RequestMethod.POST)
 
 	public @ResponseBody Map<String, String> recorddisplay(@RequestBody Map<String, String> map) {
@@ -40,21 +43,9 @@ public class RecordController {
 		recordMap.put("amount", map.get("amount"));
 		recordMap.put("incomeExpense", map.get("incomeExpense"));
 		recordMap.put("payloadType", map.get("payloadType"));
-
-		String userid = map.get("mainuserid");
-		User usr = GeneralService.getFirstByColumn(User.class, Expr.eq("username", userid));
 		recordMap.put("mainuserid", map.get("mainuserid"));
-
-		String cardNumber = map.get("cardNumber");
-		BankCard bnkid = GeneralService.getFirstByColumn(BankCard.class, Expr.eq("cardNumber", cardNumber));
-		recordMap.put("cardNumber", map.get("cardNumber"));
-
-		String asuserid = map.get("assignUserId");
-		User asuser = GeneralService.getFirstByColumn(User.class, Expr.eq("username", asuserid));
-		recordMap.put("assignUserId", map.get("usrId"));
-
-		String constId = map.get("constId");
-		Constants consid = GeneralService.getFirstByColumn(Constants.class, Expr.eq("categories", constId));
+		recordMap.put("banks", map.get("banks"));
+		recordMap.put("assignUserId", map.get("assignUserId"));
 		recordMap.put("constId", map.get("constId"));
 
 		return recordMap;
@@ -65,17 +56,7 @@ public class RecordController {
 		Map<String, Object> recordmap = new HashMap<String, Object>();
 		RecordIncomeExpense record = new RecordIncomeExpense();
 
-		String gelenDeger = map.get("incomeExpense");
-		IncomeExpense gelirgider = null;
-		if (gelenDeger.equals("GELİR")) {
-			gelirgider = IncomeExpense.INCOME;
-		} else if (gelenDeger.equals("GİDER")) {
-			gelirgider = IncomeExpense.EXPENSE;
-		} else if (gelenDeger.equals("DEVİR")) {
-			gelirgider = IncomeExpense.ASSIGN;
-		} else if (gelenDeger.equals("DEVİR KAPAMA")) {
-			gelirgider = IncomeExpense.ASSIGN;
-		}
+		IncomeExpense gelirgider= consservice.toAssignEnum(map.get("incomeExpense"));
 		record.setIncomeExpense(gelirgider);
 
 		record.setDescript(map.get("descript"));
@@ -90,8 +71,12 @@ public class RecordController {
 		record.setMainuserid(toGetusrId);
 
 		String fromAssignid = map.get("assignUserid");
+		if(fromAssignid == ""){
+			record.setAssignUserId(null);} 
+		else {
+	
 		User toGetAssignId = GeneralService.getFirstByColumn(User.class, Expr.eq("username", fromAssignid));
-		record.setAssignUserId(toGetAssignId);
+		record.setAssignUserId(toGetAssignId);}
 
 		String fromPayType = map.get("PayType");
 		PayloadType payType = null;
@@ -110,33 +95,35 @@ public class RecordController {
 		Constants category = GeneralService.getFirstByColumn(Constants.class, Expr.eq("constID", fromCategory));
 		record.setConstId(category);
 
-		if(fromPayType.equals("Cash"))
-		{	record.setBankid(null);
-			throw new RuntimeException("You choose cash. You cannot enter the bank.");
-			}	
-		
 		String toGetBank = map.get("bankident");
 		BankCard banks = GeneralService.getFirstByColumn(BankCard.class, Expr.eq("bankID", toGetBank));
 		record.setBankid(banks);
-
+		
+		if(fromPayType.equals("Cash"))
+		{	recordmap.put("bankidenr", null);
+			}	
 		recordservice.add(record);
 		recordmap.put("record", record);
 		//recordmap.put("User", toGetusrId);
 		//recordmap.put("Assign", toGetAssignId);
 		//recordmap.put("category", category);
-		//recordmap.put("bank", banks);
+		
 		
 		return recordmap;
 	}
+
 
 	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	public @ResponseBody List<RecordIncomeExpense> getAll() {
 		return recordservice.getAll();
 	}
+
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody RecordIncomeExpense delete(@RequestBody Map<String, String> maps) {
 		String descript = maps.get("descript"); // coddan çekiyo
-		RecordIncomeExpense rect = recordservice.get("descript", descript); // DB den çekiyor
+		RecordIncomeExpense rect = recordservice.get("descript", descript); // DB
+																			// den
+																			// çekiyor
 		if (rect == null)
 			throw new RuntimeException("No record can be deleted");
 		recordservice.delete(rect);

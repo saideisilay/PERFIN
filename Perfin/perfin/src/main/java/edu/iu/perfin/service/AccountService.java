@@ -28,13 +28,13 @@ public class AccountService {
 
 	// generate code
 	public static String createRefCode() {
-		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		String ret = "";
-		int length = chars.length();
+		String code = "";
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 		for (int i = 0; i < 10; i++) {
-			ret += chars.split("")[(int) (Math.random() * (length - 1))];
+			code += chars.split("")[(int) (Math.random() * (62 - 1))];
 		}
-		return ret;
+		return code;
 	}
 
 	public void delete(Account account) {

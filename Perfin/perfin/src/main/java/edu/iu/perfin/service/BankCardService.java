@@ -10,7 +10,7 @@ import edu.iu.perfin.model.BankCard;
 public class BankCardService {
 
 	public void add(BankCard card) {
-		
+		//card number unique
 				BankCard card1 = get("cardNumber", card.getCardNumber());
 				if (card1 != null)
 					throw new RuntimeException("YOU HAVE ALREADY RECORD CARD NUMBER");
