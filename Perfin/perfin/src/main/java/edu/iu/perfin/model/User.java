@@ -23,12 +23,12 @@ public class User {
 	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "USERNAME")
-	private String username;
-
 	@Column(name = "SURNAME")
 	private String surname;
-
+	
+	@Column(name = "USERNAME")
+	private String username;
+	
 	@Column(name = "EMAIL")
 	private String email;
 

@@ -10,6 +10,7 @@ import edu.iu.perfin.type.IncomeExpense;
 
 @Service
 public class ConstantsService {
+	
 	public IncomeExpense toAssignEnum(String gelenDeger)
 	{
 	IncomeExpense gelirgider = null;
@@ -23,6 +24,7 @@ public class ConstantsService {
 		gelirgider = IncomeExpense.ASSIGN;}
 		return gelirgider;
 	}
+	
 	public void add(Constants constants) {
 		Ebean.save(constants);
 	}

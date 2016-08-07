@@ -27,11 +27,13 @@ import edu.iu.perfin.type.PayloadType;
 
 @Controller
 @RequestMapping(value = "record")
-// denemesi yapılmadı
+
 public class RecordController {
 
 	@Autowired
 	RecordService recordservice;
+	
+	@Autowired
 	ConstantsService consservice;
 	
 	@RequestMapping(value = "/display", method = RequestMethod.POST)
@@ -56,7 +58,7 @@ public class RecordController {
 		Map<String, Object> recordmap = new HashMap<String, Object>();
 		RecordIncomeExpense record = new RecordIncomeExpense();
 
-		IncomeExpense gelirgider= consservice.toAssignEnum(map.get("incomeExpense"));
+		IncomeExpense gelirgider = consservice.toAssignEnum(map.get("incomeExpense"));
 		record.setIncomeExpense(gelirgider);
 
 		record.setDescript(map.get("descript"));
@@ -74,17 +76,16 @@ public class RecordController {
 		if(fromAssignid == ""){
 			record.setAssignUserId(null);} 
 		else {
-	
 		User toGetAssignId = GeneralService.getFirstByColumn(User.class, Expr.eq("username", fromAssignid));
 		record.setAssignUserId(toGetAssignId);}
 
 		String fromPayType = map.get("PayType");
 		PayloadType payType = null;
-		if (fromPayType.equals("Credit Card")) {
+		if (fromPayType.equals("Kredi Kartı")) {
 			payType = PayloadType.CreditCard;
-		} else if (fromPayType.equals("Debit Card")) {
+		} else if (fromPayType.equals("Nakit Kart")) {
 			payType = PayloadType.DebitCard;
-		} else if (fromPayType.equals("Cash")) {
+		} else if (fromPayType.equals("Nakit")) {
 			payType = PayloadType.Cash;
 		} else if (fromPayType.equals("Overdraft")) {
 			payType = PayloadType.OverdraftAcc;
@@ -94,20 +95,21 @@ public class RecordController {
 		String fromCategory = map.get("CATEGORYTYPE");
 		Constants category = GeneralService.getFirstByColumn(Constants.class, Expr.eq("constID", fromCategory));
 		record.setConstId(category);
-
+		
+		if(fromPayType.equals("Nakit"))
+		{	recordmap.put("bankidenr", null);}
+		else{
 		String toGetBank = map.get("bankident");
 		BankCard banks = GeneralService.getFirstByColumn(BankCard.class, Expr.eq("bankID", toGetBank));
-		record.setBankid(banks);
+		record.setBankid(banks);}
 		
-		if(fromPayType.equals("Cash"))
-		{	recordmap.put("bankidenr", null);
-			}	
+		
+			
 		recordservice.add(record);
 		recordmap.put("record", record);
 		//recordmap.put("User", toGetusrId);
 		//recordmap.put("Assign", toGetAssignId);
 		//recordmap.put("category", category);
-		
 		
 		return recordmap;
 	}

@@ -65,7 +65,7 @@ public class UserController {
 		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));
 		user.setAccount(account);
 		service.add(user);
-		//returnmap.put("user", user);	//user ı ekler üstüne set account old için eklemeyle beraber gösterir
+		returnmap.put("user", user);	//user ı ekler üstüne set account old için eklemeyle beraber gösterir
 		return returnmap;				//ama gereksiz ondan comment yaptım
 	}
 

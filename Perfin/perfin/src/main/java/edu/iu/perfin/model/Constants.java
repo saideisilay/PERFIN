@@ -23,6 +23,17 @@ public class Constants {
 	@SequenceGenerator(name = "S_PERFIN_CONSTANTS", sequenceName = "S_PERFIN_CONSTANTS", allocationSize = 1, initialValue = 1)
 	private Long constID;
 
+	@Column(name = "CATEGORIES")
+	@Enumerated(EnumType.STRING)
+	private IncomeExpense categories;
+
+	@Column(name = "CLASSIFICATION")
+	private String classification;
+
+	@ManyToOne
+	@JoinColumn(name = "CASEID")
+	private Account caseid;
+	
 	public Constants() {
 		super();
 	}
@@ -35,17 +46,6 @@ public class Constants {
 		this.classification = classification;
 		this.caseid = caseid;
 	}
-
-	@Column(name = "CATEGORIES")
-	@Enumerated(EnumType.STRING)
-	private IncomeExpense categories;
-
-	@Column(name = "CLASSIFICATION")
-	private String classification;
-
-	@ManyToOne
-	@JoinColumn(name = "CASEID")
-	private Account caseid;
 
 	public Long getConstID() {
 		return constID;

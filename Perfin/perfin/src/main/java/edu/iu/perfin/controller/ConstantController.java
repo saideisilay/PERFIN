@@ -32,9 +32,9 @@ public class ConstantController {
 	public @ResponseBody Map<String, Object> ekle(@RequestBody Map<String, String> map) {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Constants constants = new Constants();
+		IncomeExpense gelirgider = consservice.toAssignEnum(map.get("categories"));		
+		constants.setCategories(gelirgider);
 		
-		IncomeExpense kategoriEnumum= consservice.toAssignEnum(map.get("categories"));
-		constants.setCategories(kategoriEnumum);
 		constants.setClassification(map.get("classification"));
 		String arefcode = map.get("caseid");
 		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));

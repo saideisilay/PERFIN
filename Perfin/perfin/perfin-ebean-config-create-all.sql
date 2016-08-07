@@ -51,8 +51,8 @@ create sequence S_PERFIN_RECORD increment by 1;
 create table t_perfin_user (
   userid                        number(19) not null,
   name                          varchar2(255),
-  username                      varchar2(255),
   surname                       varchar2(255),
+  username                      varchar2(255),
   email                         varchar2(255),
   password                      varchar2(255),
   account                       number(19),

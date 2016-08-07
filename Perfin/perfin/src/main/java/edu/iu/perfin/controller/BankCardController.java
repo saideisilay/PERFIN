@@ -15,6 +15,7 @@ import edu.iu.perfin.model.BankCard;
 import edu.iu.perfin.service.BankCardService;
 import edu.iu.perfin.type.CardType;
 
+
 @Controller
 @RequestMapping(value = "bankcard")
 
@@ -59,9 +60,9 @@ public class BankCardController {
 
 		String incomingCard = map2.get("cardType");
 		CardType type = null;
-		if (incomingCard.equals("Debit Card")) {
+		if (incomingCard.equals("Nakit Kart")) {
 			type = CardType.DebitCard;
-		} else if (incomingCard.equals("Credit Card")) {
+		} else if (incomingCard.equals("Kredi Kartı")) {
 			type = CardType.CreditCard;
 		}
 		card.setCardType(type);

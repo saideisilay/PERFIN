@@ -36,12 +36,12 @@ public class Account {
 		super();
 	}
 
-	public Account(Long accountId, String accountName, String accountDesc, String Address, String refcode) {
+	public Account(Long accountId, String accountName, String accountDesc, String address, String refcode) {
 		super();
 		this.accountId = accountId;
 		this.accountName = accountName;
 		this.accountDesc = accountDesc;
-		this.address = Address;
+		this.address = address;
 		this.refcode = refcode;
 	}
 
