@@ -89,7 +89,7 @@ public class RecordController {
 		Constants category = GeneralService.getFirstByColumn(Constants.class, Expr.eq("constID", fromCategory));
 		record.setConstId(category);
 
-		if (comeinPay.equals("Nakit")) {
+		if (comeinPay.equals("Nakit")|| comeinPay.equals("nakit")) {
 			recordmap.put("bankidenr", null);
 		} else {
 			String toGetBank = map.get("bankident");
