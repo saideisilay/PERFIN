@@ -28,7 +28,9 @@ public class BankCardController {
 		Map<String, String> bankMap = new HashMap<String, String>();
 		bankMap.put("cardName", map.get("cardName"));
 		bankMap.put("cardNumber", map.get("cardNumber"));
-		bankMap.put("cardType", map.get("cardType"));
+		CardType incomingCard = bankservice.toAssignCardType(map.get("cardType"));
+		String incomCard = incomingCard.toString();
+		bankMap.put("cardType", incomCard);
 		bankMap.put("description", map.get("description"));
 		bankMap.put("limit", map.get("limit"));
 		bankMap.put("dept", map.get("dept"));
@@ -58,14 +60,8 @@ public class BankCardController {
 		BankCard card = new BankCard();
 		card.setCardName(map2.get("cardName"));
 
-		String incomingCard = map2.get("cardType");
-		CardType type = null;
-		if (incomingCard.equals("Nakit Kart")) {
-			type = CardType.DebitCard;
-		} else if (incomingCard.equals("Kredi Kartı")) {
-			type = CardType.CreditCard;
-		}
-		card.setCardType(type);
+		CardType incomingCard = bankservice.toAssignCardType(map2.get("cardType"));
+		card.setCardType(incomingCard);
 		card.setCardNumber(map2.get("cardNumber"));
 		card.setDescription(map2.get("description"));
 		String lim = map2.get("limit");

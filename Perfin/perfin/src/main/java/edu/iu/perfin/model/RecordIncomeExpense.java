@@ -42,10 +42,6 @@ public class RecordIncomeExpense {
 	@JoinColumn(name = "MAINUSERID")
 	private User mainuserid;
 
-	@ManyToOne
-	@JoinColumn(name = "ASSIGNUSERID")
-	private User assignUserId;
-
 	@Column(name = "PAYTYPE")
 	@Enumerated(EnumType.STRING)
 	private PayloadType payloadType;
@@ -63,8 +59,7 @@ public class RecordIncomeExpense {
 	}
 
 	public RecordIncomeExpense(Long recordId, String date, String descript, BigDecimal amount,
-			IncomeExpense incomeExpense, PayloadType payloadType, User mainuserid, BankCard bankid, User assignUserId,
-			Constants constId) {
+			IncomeExpense incomeExpense, PayloadType payloadType, User mainuserid, BankCard bankid, Constants constId) {
 		super();
 		this.recordId = recordId;
 		this.date = date;
@@ -74,7 +69,6 @@ public class RecordIncomeExpense {
 		this.payloadType = payloadType; // enum
 		this.mainuserid = mainuserid; // foreign
 		this.bankid = bankid; // foreign
-		this.assignUserId = assignUserId; // foreign
 		this.constId = constId; // foreign
 	}
 
@@ -132,14 +126,6 @@ public class RecordIncomeExpense {
 
 	public void setMainuserid(User mainuserid) {
 		this.mainuserid = mainuserid;
-	}
-
-	public User getAssignUserId() {
-		return assignUserId;
-	}
-
-	public void setAssignUserId(User assignUserId) {
-		this.assignUserId = assignUserId;
 	}
 
 	public Constants getConstId() {

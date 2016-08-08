@@ -32,9 +32,9 @@ public class ConstantController {
 	public @ResponseBody Map<String, Object> ekle(@RequestBody Map<String, String> map) {
 		Map<String, Object> returnmap = new HashMap<String, Object>();
 		Constants constants = new Constants();
-		IncomeExpense gelirgider = consservice.toAssignEnum(map.get("categories"));		
+		IncomeExpense gelirgider = consservice.toAssignEnum(map.get("categories"));
 		constants.setCategories(gelirgider);
-		
+
 		constants.setClassification(map.get("classification"));
 		String arefcode = map.get("caseid");
 		Account account = GeneralService.getFirstByColumn(Account.class, Expr.eq("refcode", arefcode));
@@ -48,7 +48,10 @@ public class ConstantController {
 	@RequestMapping(value = "/display", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> liste(@RequestBody Map<String, String> map) {
 		Map<String, String> constMap = new HashMap<String, String>();
-		constMap.put("categories", map.get("categories"));
+
+		IncomeExpense gelirgider = consservice.toAssignEnum(map.get("categories"));
+		String gelgid = gelirgider.toString();
+		constMap.put("categories", gelgid);
 		constMap.put("classification", map.get("classification"));
 		constMap.put("caseid", map.get("caseid"));
 		return constMap;

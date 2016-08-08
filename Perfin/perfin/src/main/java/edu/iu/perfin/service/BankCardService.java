@@ -5,10 +5,22 @@ import org.springframework.stereotype.Service;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import edu.iu.perfin.model.BankCard;
+import edu.iu.perfin.type.CardType;
 
 @Service
 public class BankCardService {
 
+	public CardType toAssignCardType(String incomingCard){
+	CardType type = null;
+	if (incomingCard.equals("Kredi Kartı") || incomingCard.equals("kredi kartı")
+			|| incomingCard.equals("kredi kart")) {
+		type = CardType.CreditCard;
+	} else if (incomingCard.equals("Debit kart") || incomingCard.equals("maaş kartı")
+				|| incomingCard.equals("Banka kartı")) {
+		type = CardType.DebitCard;
+	}
+	return type;
+	}
 	public void add(BankCard card) {
 		//card number unique
 				BankCard card1 = get("cardNumber", card.getCardNumber());

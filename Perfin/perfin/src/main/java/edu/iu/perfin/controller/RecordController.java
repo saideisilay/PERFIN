@@ -21,9 +21,9 @@ import edu.iu.perfin.model.User;
 import edu.iu.perfin.service.ConstantsService;
 import edu.iu.perfin.service.GeneralService;
 import edu.iu.perfin.service.RecordService;
+import edu.iu.perfin.service.UserService;
 import edu.iu.perfin.type.IncomeExpense;
 import edu.iu.perfin.type.PayloadType;
-
 
 @Controller
 @RequestMapping(value = "record")
@@ -32,10 +32,13 @@ public class RecordController {
 
 	@Autowired
 	RecordService recordservice;
-	
+
 	@Autowired
 	ConstantsService consservice;
-	
+
+	@Autowired
+	UserService userservice;
+
 	@RequestMapping(value = "/display", method = RequestMethod.POST)
 
 	public @ResponseBody Map<String, String> recorddisplay(@RequestBody Map<String, String> map) {
@@ -43,11 +46,16 @@ public class RecordController {
 		recordMap.put("recdate", map.get("recdate"));
 		recordMap.put("descript", map.get("descript"));
 		recordMap.put("amount", map.get("amount"));
-		recordMap.put("incomeExpense", map.get("incomeExpense"));
-		recordMap.put("payloadType", map.get("payloadType"));
+		IncomeExpense incExp = consservice.toAssignEnum(map.get("incomeExpense"));
+		String gelgit = incExp.toString();
+		recordMap.put("incomeExpense", gelgit);
+
+		PayloadType comeinPay = recordservice.toAssignPayload(map.get("payloadType"));
+		String payInfo = comeinPay.toString();
+		recordMap.put("payloadType", payInfo);
+
 		recordMap.put("mainuserid", map.get("mainuserid"));
 		recordMap.put("banks", map.get("banks"));
-		recordMap.put("assignUserId", map.get("assignUserId"));
 		recordMap.put("constId", map.get("constId"));
 
 		return recordMap;
@@ -72,48 +80,31 @@ public class RecordController {
 		User toGetusrId = GeneralService.getFirstByColumn(User.class, Expr.eq("username", fromUserid));
 		record.setMainuserid(toGetusrId);
 
-		String fromAssignid = map.get("assignUserid");
-		if(fromAssignid == ""){
-			record.setAssignUserId(null);} 
-		else {
-		User toGetAssignId = GeneralService.getFirstByColumn(User.class, Expr.eq("username", fromAssignid));
-		record.setAssignUserId(toGetAssignId);}
+		// kişi yazarken büyük küçük dikkat etmezse diye OR kullandım
 
-		String fromPayType = map.get("PayType");
-		PayloadType payType = null;
-		if (fromPayType.equals("Kredi Kartı")) {
-			payType = PayloadType.CreditCard;
-		} else if (fromPayType.equals("Nakit Kart")) {
-			payType = PayloadType.DebitCard;
-		} else if (fromPayType.equals("Nakit")) {
-			payType = PayloadType.Cash;
-		} else if (fromPayType.equals("Overdraft")) {
-			payType = PayloadType.OverdraftAcc;
-		}
-		record.setPayloadType(payType);
+		PayloadType comeinPay = recordservice.toAssignPayload(map.get("PayType"));
+		record.setPayloadType(comeinPay);
 
 		String fromCategory = map.get("CATEGORYTYPE");
 		Constants category = GeneralService.getFirstByColumn(Constants.class, Expr.eq("constID", fromCategory));
 		record.setConstId(category);
-		
-		if(fromPayType.equals("Nakit"))
-		{	recordmap.put("bankidenr", null);}
-		else{
-		String toGetBank = map.get("bankident");
-		BankCard banks = GeneralService.getFirstByColumn(BankCard.class, Expr.eq("bankID", toGetBank));
-		record.setBankid(banks);}
-		
-		
-			
+
+		if (comeinPay.equals("Nakit")) {
+			recordmap.put("bankidenr", null);
+		} else {
+			String toGetBank = map.get("bankident");
+			BankCard banks = GeneralService.getFirstByColumn(BankCard.class, Expr.eq("bankID", toGetBank));
+			record.setBankid(banks);
+		}
+
 		recordservice.add(record);
 		recordmap.put("record", record);
-		//recordmap.put("User", toGetusrId);
-		//recordmap.put("Assign", toGetAssignId);
-		//recordmap.put("category", category);
-		
+		// recordmap.put("User", toGetusrId);
+		// recordmap.put("Assign", toGetAssignId);
+		// recordmap.put("category", category);
+
 		return recordmap;
 	}
-
 
 	@RequestMapping(value = "/all", method = RequestMethod.POST)
 	public @ResponseBody List<RecordIncomeExpense> getAll() {

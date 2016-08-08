@@ -8,20 +8,19 @@ import com.avaje.ebean.Expr;
 import edu.iu.perfin.model.Constants;
 import edu.iu.perfin.type.IncomeExpense;
 
+
 @Service
 public class ConstantsService {
 	
 	public IncomeExpense toAssignEnum(String gelenDeger)
 	{
+		// büyük küçük harfe dikkat et
 	IncomeExpense gelirgider = null;
-	if (gelenDeger.equals("GELİR")) {
+	if (gelenDeger.equals("GELİR")|| gelenDeger.equals("gelir")||gelenDeger.equals("Gelir")) {
 		gelirgider = IncomeExpense.INCOME;
-	} else if (gelenDeger.equals("GİDER")) {
+	} else if (gelenDeger.equals("GİDER")|| gelenDeger.equals("gider")||gelenDeger.equals("Gider")) {
 		gelirgider = IncomeExpense.EXPENSE;
-	} else if (gelenDeger.equals("DEVİR")) {
-		gelirgider = IncomeExpense.ASSIGN;
-	} else if (gelenDeger.equals("DEVİR KAPAMA")) {
-		gelirgider = IncomeExpense.ASSIGN;}
+	}
 		return gelirgider;
 	}
 	

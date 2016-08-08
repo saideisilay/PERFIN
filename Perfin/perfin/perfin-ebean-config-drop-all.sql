@@ -4,9 +4,6 @@ drop index if exists ix_t_perfin_constants_caseid;
 alter table t_perfin_record drop constraint if exists fk_t_perfin_record_mainuserid;
 drop index if exists ix_t_perfin_record_mainuserid;
 
-alter table t_perfin_record drop constraint if exists fk_t_prfn_rcrd_ssgnsrd;
-drop index if exists ix_t_prfn_rcrd_ssgnsrd;
-
 alter table t_perfin_record drop constraint if exists fk_t_prfn_rcrd_ctgrytyp;
 drop index if exists ix_t_prfn_rcrd_ctgrytyp;
 

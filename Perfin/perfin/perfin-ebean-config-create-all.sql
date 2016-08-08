@@ -23,10 +23,10 @@ create sequence S_PERFIN_BANK increment by 1;
 
 create table t_perfin_constants (
   constid                       number(19) not null,
-  categories                    varchar2(8),
+  categories                    varchar2(7),
   classification                varchar2(255),
   caseid                        number(19),
-  constraint ck_t_prfn_cnstnts_ctgrs check (CATEGORIES in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
+  constraint ck_t_prfn_cnstnts_ctgrs check (CATEGORIES in ('INCOME','EXPENSE')),
   constraint pk_t_perfin_constants primary key (constid)
 );
 create sequence S_PERFIN_CONSTANTS increment by 1;
@@ -36,14 +36,13 @@ create table t_perfin_record (
   recdate                       varchar2(255),
   descript                      varchar2(255),
   amount                        number(38),
-  incomeexpense                 varchar2(8),
+  incomeexpense                 varchar2(7),
   mainuserid                    number(19),
-  assignuserid                  number(19),
-  paytype                       varchar2(12),
+  paytype                       varchar2(10),
   categorytype                  number(19),
   banks                         number(19),
-  constraint ck_t_prfn_rcrd_ncmxpns check (INCOMEEXPENSE in ('INCOME','EXPENSE','ASSIGN','OUTSTAND')),
-  constraint ck_t_perfin_record_paytype check (PAYTYPE in ('Cash','CreditCard','DebitCard','OverdraftAcc')),
+  constraint ck_t_prfn_rcrd_ncmxpns check (INCOMEEXPENSE in ('INCOME','EXPENSE')),
+  constraint ck_t_perfin_record_paytype check (PAYTYPE in ('Cash','CreditCard','DebitCard')),
   constraint pk_t_perfin_record primary key (recordid)
 );
 create sequence S_PERFIN_RECORD increment by 1;
@@ -65,9 +64,6 @@ create index ix_t_perfin_constants_caseid on t_perfin_constants (caseid);
 
 alter table t_perfin_record add constraint fk_t_perfin_record_mainuserid foreign key (mainuserid) references t_perfin_user (userid);
 create index ix_t_perfin_record_mainuserid on t_perfin_record (mainuserid);
-
-alter table t_perfin_record add constraint fk_t_prfn_rcrd_ssgnsrd foreign key (assignuserid) references t_perfin_user (userid);
-create index ix_t_prfn_rcrd_ssgnsrd on t_perfin_record (assignuserid);
 
 alter table t_perfin_record add constraint fk_t_prfn_rcrd_ctgrytyp foreign key (categorytype) references t_perfin_constants (constid);
 create index ix_t_prfn_rcrd_ctgrytyp on t_perfin_record (categorytype);
