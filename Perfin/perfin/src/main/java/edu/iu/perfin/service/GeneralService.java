@@ -18,8 +18,6 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.OrderBy.Property;
 import com.avaje.ebean.Query;
 import com.avaje.ebeaninternal.server.expression.SimpleExpression;
-
-import edu.iu.perfin.type.IncomeExpense;
 import edu.iu.perfin.util.CollectionUtils;
 import edu.iu.perfin.util.StringUtil;
 

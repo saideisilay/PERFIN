@@ -46,7 +46,6 @@ public class AccountController {
 		return account;
 	}
 
-	// görüyo
 	@RequestMapping(value = "/display", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> list(@RequestBody Map<String, String> map) {
 		Map<String, String> accMap = new HashMap<String, String>();
